@@ -37,7 +37,7 @@ public class UsuarioController {
     ResponseEntity<Usuario> agregarUsuario(@RequestBody @Validated Usuario usuario){
         Usuario u = service.registrar(usuario);
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(u.getId()).toUri();
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(u.getIdUsuario()).toUri();
 
         return ResponseEntity.created(location).build();
     }
@@ -46,7 +46,7 @@ public class UsuarioController {
     ResponseEntity<Void> eliminarUsuario(@PathVariable("id") Long id){
         Usuario usuario = service.listarPorId(id);
 
-        service.eliminar(usuario.getId());
+        service.eliminar(usuario.getIdUsuario());
 
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }

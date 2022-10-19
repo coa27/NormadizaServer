@@ -2,6 +2,7 @@ package com.coa.service.impl;
 
 import com.coa.model.Tarea;
 import com.coa.repo.IGenericRepo;
+import com.coa.repo.ITareaRepo;
 import com.coa.service.ITareaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class TareaServiceImpl extends CRUDImpl<Tarea, Long> implements ITareaService {
 
     @Autowired
-    private IGenericRepo repo;
+    private ITareaRepo repo;
 
     @Override
     protected IGenericRepo<Tarea, Long> getRepo() {

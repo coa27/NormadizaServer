@@ -2,51 +2,51 @@ package com.coa.model;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
+@Table(name = "usuario")
 public class Usuario {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_usuario")
-	private Long id;
+	private Long idUsuario;
 
 	@NotBlank
-	@Min(value = 3, message = "El usuario debe tener mas de 3 caracteres")
+	@Length(min = 1, message = "El usuario debe ser superior a 1 caracter")
+	@Column(length = 15)
 	private String nombre;
 	
 	@NotBlank
-	@Min(value = 3, message = "La contrasenia debe tener mas de 3 caracteres")
+	@Column(length = 27)
+	@Length(min = 3, message = "La contrasenia debe ser superior a 3 caracteres")
 	private String contrasenia;
 
 	@Column(name = "create_at")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss")
 	private LocalDate createAt = LocalDate.now();
 
 	@Column(name = "updated_at")
 	private LocalDate updatedAt = LocalDate.now();
 
-	@OneToOne
+	@OneToOne(mappedBy = "usuario")
 	@JsonIgnore
-	@PrimaryKeyJoinColumn
 	private Tablero tablero;
 
-	public Long getId() {
-		return id;
+	public Long getIdUsuario() {
+		return idUsuario;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setIdUsuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 	public String getNombre() {

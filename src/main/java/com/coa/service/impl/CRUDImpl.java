@@ -12,12 +12,12 @@ public abstract class CRUDImpl<T, ID> implements ICRUD<T, ID> {
 
     @Override
     public T registrar(T t) {
-        return null;
+        return getRepo().save(t);
     }
 
     @Override
     public T modificar(T t) {
-        return null;
+        return getRepo().save(t);
     }
 
     @Override
@@ -32,6 +32,6 @@ public abstract class CRUDImpl<T, ID> implements ICRUD<T, ID> {
 
     @Override
     public void eliminar(ID id) {
-
+        getRepo().deleteById(id);
     }
 }
