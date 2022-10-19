@@ -1,5 +1,6 @@
 package com.coa.service.impl;
 
+import com.coa.exception.NoEncontradoException;
 import com.coa.repo.IGenericRepo;
 import com.coa.service.ICRUD;
 
@@ -26,7 +27,7 @@ public abstract class CRUDImpl<T, ID> implements ICRUD<T, ID> {
 
     @Override
     public T listarPorId(ID id) {
-        return getRepo().findById(id).orElse(null);
+        return getRepo().findById(id).orElseThrow();
     }
 
     @Override

@@ -46,10 +46,6 @@ public class UsuarioController {
     ResponseEntity<Void> eliminarUsuario(@PathVariable("id") Long id){
         Usuario usuario = service.listarPorId(id);
 
-        if (usuario == null){
-            return null;
-        }
-
         service.eliminar(usuario.getId());
 
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
