@@ -21,12 +21,12 @@ public abstract class CRUDImpl<T, ID> implements ICRUD<T, ID> {
 
     @Override
     public List<T> listar() {
-        return null;
+        return getRepo().findAll();
     }
 
     @Override
     public T listarPorId(ID id) {
-        return null;
+        return getRepo().findById(id).orElse(null);
     }
 
     @Override

@@ -29,10 +29,10 @@ public class Tablero {
 	private String nombre;
 	
 	@Column(name = "create_at")
-	private LocalDate createAt;
+	private LocalDate createAt = LocalDate.now();
 
 	@Column(name = "updated_at")
-	private LocalDate updatedAt;
+	private LocalDate updatedAt = LocalDate.now();
 	
 	@OneToOne(mappedBy = "tablero", cascade = CascadeType.ALL)
 	@MapsId

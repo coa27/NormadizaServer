@@ -33,10 +33,10 @@ public class Tarea {
 	private LocalDate fechaFin;
 	
 	@Column(name = "create_at")
-	private LocalDate createAt;
+	private LocalDate createAt = LocalDate.now();
 
 	@Column(name = "updated_at")
-	private LocalDate updatedAt;
+	private LocalDate updatedAt = LocalDate.now();
 	
 	@ManyToOne
 	@JoinColumn(name = "id_tablero", nullable=false)

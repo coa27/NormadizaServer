@@ -31,10 +31,10 @@ public class Usuario {
 	private String contrasenia;
 
 	@Column(name = "create_at")
-	private LocalDate createAt;
+	private LocalDate createAt = LocalDate.now();
 
 	@Column(name = "updated_at")
-	private LocalDate updatedAt;
+	private LocalDate updatedAt = LocalDate.now();
 
 	@OneToOne
 	@JsonIgnore

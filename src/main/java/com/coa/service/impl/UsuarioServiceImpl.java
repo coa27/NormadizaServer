@@ -16,4 +16,6 @@ public class UsuarioServiceImpl extends CRUDImpl<Usuario, Long> implements IUsua
     protected IGenericRepo<Usuario, Long> getRepo() {
         return repo;
     }
+
+
 }
