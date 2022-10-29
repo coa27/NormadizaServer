@@ -19,20 +19,27 @@ public class Tablero {
 	
 	@NotBlank
 	private String nombre;
-	
+
 	@Column(name = "create_at")
 	private LocalDate createAt = LocalDate.now();
 
 	@Column(name = "updated_at")
 	private LocalDate updatedAt = LocalDate.now();
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+	@ManyToOne
+	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "tablero")
 	@JsonIgnore
 	private List<Tarea> tarea;
+
+	public Tablero() {
+	}
+
+	public Tablero(String nombre) {
+		this.nombre = nombre;
+	}
 
 	public Long getId() {
 		return id;
@@ -81,7 +88,5 @@ public class Tablero {
 	public void setTarea(List<Tarea> tarea) {
 		this.tarea = tarea;
 	}
-	
-	
 
 }

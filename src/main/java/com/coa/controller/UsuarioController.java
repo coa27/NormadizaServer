@@ -33,15 +33,6 @@ public class UsuarioController {
         return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
     }
 
-    @PostMapping
-    ResponseEntity<Usuario> agregarUsuario(@RequestBody @Validated Usuario usuario){
-        Usuario u = service.registrar(usuario);
-
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(u.getIdUsuario()).toUri();
-
-        return ResponseEntity.created(location).build();
-    }
-
     @DeleteMapping("/{id}")
     ResponseEntity<Void> eliminarUsuario(@PathVariable("id") Long id){
         Usuario usuario = service.listarPorId(id);

@@ -20,6 +20,9 @@ public class Tarea {
 	
 	@NotNull
 	private String descripcion;
+
+	@NotNull
+	private Boolean finalizado = false;
 	
 	@Column(name = "fecha_inicio")
 	private LocalDate fechaInicio;
@@ -100,7 +103,12 @@ public class Tarea {
 	public void setTablero(Tablero tablero) {
 		this.tablero = tablero;
 	}
-	
-	
 
+	public Boolean getFinalizado() {
+		return finalizado;
+	}
+
+	public void setFinalizado(Boolean finalizado) {
+		this.finalizado = finalizado;
+	}
 }

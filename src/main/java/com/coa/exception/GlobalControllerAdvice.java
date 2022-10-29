@@ -29,6 +29,20 @@ public class GlobalControllerAdvice extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(modelException.getHttpStatus()).body(modelException);
     }
 
+    @ExceptionHandler(ErrorRegistroException.class)
+    protected ResponseEntity<Object> handleRegistroException(Exception ex) {
+        ModelException modelException = new ModelException(HttpStatus.BAD_REQUEST, LocalDateTime.now(), ex.getMessage());
+
+        return ResponseEntity.status(modelException.getHttpStatus()).body(modelException);
+    }
+
+    @ExceptionHandler(JWTError.class)
+    protected ResponseEntity<Object> handleJwtException(Exception ex) {
+        ModelException modelException = new ModelException(HttpStatus.BAD_REQUEST, LocalDateTime.now(), ex.getMessage());
+
+        return ResponseEntity.status(modelException.getHttpStatus()).body(modelException);
+    }
+
 
 
 }
