@@ -89,7 +89,7 @@ public class AuthServiceImpl implements IAuthService {
 
     private void rolUsuario(Usuario usuario){
         Set<Rol> rol = new HashSet<>();
-        rol.add(rolRepo.findByRoleNombre("admin").orElseThrow(() -> new ErrorRegistroException("ERROR CON EL ROL")));
+        rol.add(rolRepo.findByRoleNombre("user").orElseThrow(() -> new ErrorRegistroException("ERROR CON EL ROL")));
         usuario.setRoles(new HashSet<>(rol));
     }
 }

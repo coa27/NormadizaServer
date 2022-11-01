@@ -19,4 +19,10 @@ public class UsuarioServiceImpl extends CRUDImpl<Usuario, Long> implements IUsua
     }
 
 
+    @Override
+    public Usuario retornarUsuario() {
+
+
+        return null;
+    }
 }

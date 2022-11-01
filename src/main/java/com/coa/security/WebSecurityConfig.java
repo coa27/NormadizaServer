@@ -1,6 +1,7 @@
 package com.coa.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,14 +21,28 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
 
+    @Autowired
+    private JWTAuthEntryPoint jwtAuthEntryPoint;
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity, AuthenticationManager authenticationManager) throws Exception {
-        httpSecurity.csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests( auth -> { auth
-                        .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                        .anyRequest().authenticated();
+//        httpSecurity.csrf().disable()
+//                .exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint)
+//                .and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authorizeRequests( auth -> { auth
+//                        .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
+//                        .anyRequest().authenticated();
+//                });
+
+        httpSecurity
+                .csrf(csrf -> csrf.disable())
+                .exceptionHandling( exceptionhandling -> exceptionhandling.authenticationEntryPoint(jwtAuthEntryPoint))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeRequests(auth -> {
+                    auth.antMatchers(HttpMethod.POST, "/auth/**").permitAll();
+                    auth.anyRequest().authenticated();
                 });
 
         return httpSecurity.addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class).build();

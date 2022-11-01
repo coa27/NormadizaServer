@@ -29,26 +29,21 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        try {
 
-            String token = tokenParse(request);
-            if (token != null && tokenUtils.validarToken(token)){
-                String usuarioOrEmail = tokenUtils.getUsuarioOrEmailDelToken(token);
-                UserDetails userDetails = userDetailsService.loadUserByUsername(usuarioOrEmail);
+        String token = tokenParse(request);
+        if (token != null && tokenUtils.validarToken(token)){
+            String usuarioOrEmail = tokenUtils.getUsuarioOrEmailDelToken(token);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(usuarioOrEmail);
 
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities()
-                );
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                    userDetails, null, userDetails.getAuthorities()
+            );
 
-                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            }
-            filterChain.doFilter(request, response);
-
-
-        }catch (Exception e){
-            throw new NoEncontradoException(e.getMessage());
+            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
+        filterChain.doFilter(request, response);
+
     }
 
     private String tokenParse(HttpServletRequest request){

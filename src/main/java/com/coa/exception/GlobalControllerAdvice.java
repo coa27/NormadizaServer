@@ -3,6 +3,9 @@ package com.coa.exception;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.AuthorizationServiceException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -39,6 +42,20 @@ public class GlobalControllerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(JWTError.class)
     protected ResponseEntity<Object> handleJwtException(Exception ex) {
         ModelException modelException = new ModelException(HttpStatus.BAD_REQUEST, LocalDateTime.now(), ex.getMessage());
+
+        return ResponseEntity.status(modelException.getHttpStatus()).body(modelException);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    protected ResponseEntity<Object> handleAuth(Exception ex) {
+        ModelException modelException = new ModelException(HttpStatus.UNAUTHORIZED, LocalDateTime.now(), ex.getMessage());
+
+        return ResponseEntity.status(modelException.getHttpStatus()).body(modelException);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    protected ResponseEntity<Object> handleAuthorize(Exception ex) {
+        ModelException modelException = new ModelException(HttpStatus.UNAUTHORIZED, LocalDateTime.now(), "Usted es un sucio y normal usuario");
 
         return ResponseEntity.status(modelException.getHttpStatus()).body(modelException);
     }
