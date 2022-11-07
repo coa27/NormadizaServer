@@ -73,6 +73,7 @@ public class Tablero {
 		this.updatedAt = updatedAt;
 	}
 
+	@JsonIgnore
 	public Usuario getUsuario() {
 		return usuario;
 	}

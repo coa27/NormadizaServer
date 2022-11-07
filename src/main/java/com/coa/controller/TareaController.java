@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -24,6 +25,7 @@ public class TareaController {
     private ITareaService service;
 
     @GetMapping
+    @PreAuthorize("hasRole('admin')")
     ResponseEntity<List<TareaDTO>> listarTareas(){
         List<TareaDTO> tareas = service.listarPorDTO();
 
@@ -31,6 +33,7 @@ public class TareaController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('admin')")
     ResponseEntity<TareaDTO> listarTareaPorId(@PathVariable("id") Long id){
         TareaDTO tarea = service.listarPorDTOId(id);
 
@@ -38,15 +41,15 @@ public class TareaController {
     }
 
     @GetMapping("/tablero/{id}")
-    ResponseEntity<List<TareaDTO>> listarTareaPorTablero(@PathVariable("id") Long id){
-        List<TareaDTO> tarea = service.listarDTOPorTablero(id);
+    ResponseEntity<Page<Tarea>> listarTareaPorTablero(@PathVariable("id") Long id, Pageable pageable){
+        Page<Tarea> tarea = service.listarDTOPorTablero(id, pageable);
 
-        return new ResponseEntity<List<TareaDTO>>(tarea, HttpStatus.OK);
+        return new ResponseEntity<Page<Tarea>>(tarea, HttpStatus.OK);
     }
 
     @GetMapping("/paginacion")
     ResponseEntity<Page<Tarea>> listarPaginacion(@RequestParam(value = "tablero") String id, Pageable pageable){
-        Page<Tarea> tareas =service.paginacion(Long.parseLong(id), pageable);
+        Page<Tarea> tareas = service.paginacion(Long.parseLong(id), pageable);
 
         return new ResponseEntity<>(tareas, HttpStatus.OK);
     }
@@ -72,7 +75,7 @@ public class TareaController {
     ResponseEntity<Void> eliminarTarea(@PathVariable("id") Long id){
         Tarea tarea = service.listarPorId(id);
 
-        service.eliminar(tarea.getId());
+        service.eliminarTarea(tarea.getId());
 
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }

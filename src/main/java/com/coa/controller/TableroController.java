@@ -5,6 +5,8 @@ import com.coa.model.Tablero;
 import com.coa.repo.RegistroTableroDTO;
 import com.coa.service.ITableroService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -23,15 +25,23 @@ public class TableroController {
     @Autowired
     private ITableroService service;
 
-    @GetMapping
+    @GetMapping("/tableros")
     @PreAuthorize("hasRole('admin')")
-    ResponseEntity<List<TableroDTO>> listarTableros(){
+    ResponseEntity<List<TableroDTO>> listarTablerosAdmin(){
         List<TableroDTO> tableros = service.listarDTO();
 
         return new ResponseEntity<List<TableroDTO>>(tableros, HttpStatus.OK);
     }
 
+    @GetMapping
+    ResponseEntity<Page<Tablero>> listarTableros(Pageable pageable){
+        Page<Tablero> tableros = service.listarDTOUsuario(pageable);
+
+        return new ResponseEntity<Page<Tablero>>(tableros, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('admin')")
     ResponseEntity<TableroDTO> listarTableroPorId(@PathVariable("id") Long id){
         TableroDTO tablero = service.listarDTOPorId(id);
 
@@ -61,7 +71,7 @@ public class TableroController {
     ResponseEntity<Void> eliminarTablero(@PathVariable("id") Long id){
         Tablero tablero = service.listarPorId(id);
 
-        service.eliminar(tablero.getId());
+        service.eliminarTablero(tablero.getId());
 
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }

@@ -9,6 +9,9 @@ import com.coa.repo.RegistroTableroDTO;
 import com.coa.security.UserDetailsImpl;
 import com.coa.service.ITableroService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -70,6 +73,14 @@ public class TableroServiceImpl extends CRUDImpl<Tablero, Long> implements ITabl
     }
 
     @Override
+    public Page<Tablero> listarDTOUsuario(Pageable pageable) {
+        UserDetailsImpl usuario = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Page<Tablero> paginacion = repo.obtenerPaginacion(usuario.getIdUsuario(), pageable);
+
+        return paginacion;
+    }
+
+    @Override
     public List<TableroDTO> listarDTOPorIdUsuario(Long id) {
         List<Tablero> tablero = repo.findAllByUsuarioIdUsuario(id);
 
@@ -83,7 +94,30 @@ public class TableroServiceImpl extends CRUDImpl<Tablero, Long> implements ITabl
 
     @Override
     public void actualizar(TableroDTO tablero) {
+        UserDetailsImpl usuario = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        esSuTablero(usuario.getIdUsuario(), tablero.getIdTablero());
+
         repo.actualizarTablero(tablero.getNombre(), LocalDate.now(), tablero.getIdTablero());
     }
 
+    @Override
+    public void eliminarTablero(Long id) {
+        UserDetailsImpl usuario = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        //valido si es su tablero
+        esSuTablero(usuario.getIdUsuario(), id);
+
+        repo.deleteById(id);
+    }
+
+    private Boolean esSuTablero(Long idUsuario, Long idTablero){
+        List<Long> idsTableros = repo.obtenerIdsTableroPorUsuario(idUsuario);
+
+        if(idsTableros.contains(idTablero)){
+            return true;
+        }
+        throw new AuthorizationServiceException("No tiene acceso a este recurso");
+
+    }
 }

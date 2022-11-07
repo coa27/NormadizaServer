@@ -21,4 +21,7 @@ public interface ITareaRepo extends IGenericRepo<Tarea, Long> {
 
     @Query(value = "select * from tarea where id_tablero = ?", nativeQuery = true)
     Page<Tarea> paginacion(Long idTablero, Pageable pageable);
+
+//    @Query(value = "select t.id_tarea, t.create_at, t.descripcion, t.fecha_fin, t.fecha_inicio, t.finalizado, t.nombre, t.updated_at, t.id_tablero from tarea as t INNER JOIN tablero ON tablero.id_tablero=t.id_tablero where tablero.id_usuario = ?", nativeQuery = true)
+//    Page<Tarea> tareaPorUsuario(Long idUsuario, );
 }

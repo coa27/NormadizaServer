@@ -26,16 +26,6 @@ public class WebSecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity, AuthenticationManager authenticationManager) throws Exception {
-//        httpSecurity.csrf().disable()
-//                .exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint)
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .authorizeRequests( auth -> { auth
-//                        .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
-//                        .anyRequest().authenticated();
-//                });
-
         httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .exceptionHandling( exceptionhandling -> exceptionhandling.authenticationEntryPoint(jwtAuthEntryPoint))

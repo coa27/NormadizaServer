@@ -32,6 +32,13 @@ public class GlobalControllerAdvice extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(modelException.getHttpStatus()).body(modelException);
     }
 
+    @ExceptionHandler(NoEncontradoException.class)
+    protected ResponseEntity<Object> handleNoEncontrado(Exception ex) {
+        ModelException modelException = new ModelException(HttpStatus.NOT_FOUND, LocalDateTime.now(), ex.getMessage());
+
+        return ResponseEntity.status(modelException.getHttpStatus()).body(modelException);
+    }
+
     @ExceptionHandler(ErrorRegistroException.class)
     protected ResponseEntity<Object> handleRegistroException(Exception ex) {
         ModelException modelException = new ModelException(HttpStatus.BAD_REQUEST, LocalDateTime.now(), ex.getMessage());
@@ -53,9 +60,9 @@ public class GlobalControllerAdvice extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(modelException.getHttpStatus()).body(modelException);
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
+    @ExceptionHandler(AuthorizationServiceException.class)
     protected ResponseEntity<Object> handleAuthorize(Exception ex) {
-        ModelException modelException = new ModelException(HttpStatus.UNAUTHORIZED, LocalDateTime.now(), "Usted es un sucio y normal usuario");
+        ModelException modelException = new ModelException(HttpStatus.UNAUTHORIZED, LocalDateTime.now(), "Autorizacion fallida");
 
         return ResponseEntity.status(modelException.getHttpStatus()).body(modelException);
     }
