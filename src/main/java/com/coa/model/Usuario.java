@@ -49,7 +49,7 @@ public class Usuario {
 	@JsonIgnore
 	private List<Tablero> tablero;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JsonIgnore
 	@JoinTable(name = "usuarios_roles",
 			joinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario"),

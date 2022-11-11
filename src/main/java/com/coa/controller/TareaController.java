@@ -25,7 +25,6 @@ public class TareaController {
     private ITareaService service;
 
     @GetMapping
-    @PreAuthorize("hasRole('admin')")
     ResponseEntity<List<TareaDTO>> listarTareas(){
         List<TareaDTO> tareas = service.listarPorDTO();
 
@@ -33,7 +32,6 @@ public class TareaController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('admin')")
     ResponseEntity<TareaDTO> listarTareaPorId(@PathVariable("id") Long id){
         TareaDTO tarea = service.listarPorDTOId(id);
 
@@ -45,13 +43,6 @@ public class TareaController {
         Page<Tarea> tarea = service.listarDTOPorTablero(id, pageable);
 
         return new ResponseEntity<Page<Tarea>>(tarea, HttpStatus.OK);
-    }
-
-    @GetMapping("/paginacion")
-    ResponseEntity<Page<Tarea>> listarPaginacion(@RequestParam(value = "tablero") String id, Pageable pageable){
-        Page<Tarea> tareas = service.paginacion(Long.parseLong(id), pageable);
-
-        return new ResponseEntity<>(tareas, HttpStatus.OK);
     }
 
     @PostMapping

@@ -17,8 +17,6 @@ public interface ITareaService extends ICRUD<Tarea, Long> {
 
     void actualizar(TareaDTO tareaDTO);
 
-    Page<Tarea> paginacion(Long idTablero, Pageable pageable);
-
     void eliminarTarea(Long idTarea);
 
 }

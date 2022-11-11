@@ -58,12 +58,6 @@ public class TareaServiceImpl extends CRUDImpl<Tarea, Long> implements ITareaSer
 
     @Override
     public Page<Tarea> listarDTOPorTablero(Long id, Pageable pageable) {
-//        List<Tarea> tareas = repo.findAllByTableroId(id);
-//
-//        List<TareaDTO> tareaDTOS = tareas.stream().map(t -> {
-//            TareaDTO tableroDTO1 = new TareaDTO(t.getId(), t.getNombre(), t.getDescripcion(), t.getFinalizado(), t.getFechaInicio(), t.getFechaFin(), LocalDate.now(), LocalDate.now(), t.getTablero().getId());
-//            return tableroDTO1;
-//        } ).collect(Collectors.toList());
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         //valido si se esta accediendo a su tablero
@@ -92,11 +86,6 @@ public class TareaServiceImpl extends CRUDImpl<Tarea, Long> implements ITareaSer
         esSuTablero(userDetails.getIdUsuario(), tareaDTO.getIdTablero());
 
         repo.actualizarTablero(tareaDTO.getNombre(), tareaDTO.getDescripcion(), tareaDTO.getFinalizado(), tareaDTO.getFechaInicio(), tareaDTO.getFechaFin(), LocalDate.now(), tareaDTO.getId());
-    }
-
-    @Override
-    public Page<Tarea> paginacion(Long idTablero, Pageable pageable) {
-        return repo.paginacion(idTablero, pageable);
     }
 
     @Override

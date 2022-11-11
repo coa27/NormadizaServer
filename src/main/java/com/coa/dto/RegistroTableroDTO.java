@@ -1,4 +1,4 @@
-package com.coa.repo;
+package com.coa.dto;
 
 public class RegistroTableroDTO {
 

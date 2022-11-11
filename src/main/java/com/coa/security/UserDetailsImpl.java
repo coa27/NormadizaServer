@@ -22,8 +22,6 @@ public class UserDetailsImpl implements UserDetails {
     private LocalDate createAt = LocalDate.now();
     private LocalDate updatedAt = LocalDate.now();
     @JsonIgnore
-    private Tablero tablero;
-    @JsonIgnore
     private String contrasenia;
     @JsonIgnore
     private Set<Rol> roles = new HashSet<>();
@@ -90,14 +88,6 @@ public class UserDetailsImpl implements UserDetails {
 
     public void setUpdatedAt(LocalDate updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public Tablero getTablero() {
-        return tablero;
-    }
-
-    public void setTablero(Tablero tablero) {
-        this.tablero = tablero;
     }
 
     public String getContrasenia() {

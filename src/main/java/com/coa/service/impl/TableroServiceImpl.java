@@ -5,14 +5,13 @@ import com.coa.model.Tablero;
 import com.coa.model.Usuario;
 import com.coa.repo.IGenericRepo;
 import com.coa.repo.ITableroRepo;
-import com.coa.repo.RegistroTableroDTO;
+import com.coa.dto.RegistroTableroDTO;
 import com.coa.security.UserDetailsImpl;
 import com.coa.service.ITableroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AuthorizationServiceException;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 

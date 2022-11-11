@@ -2,14 +2,13 @@ package com.coa.controller;
 
 import com.coa.dto.TableroDTO;
 import com.coa.model.Tablero;
-import com.coa.repo.RegistroTableroDTO;
+import com.coa.dto.RegistroTableroDTO;
 import com.coa.service.ITableroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +25,6 @@ public class TableroController {
     private ITableroService service;
 
     @GetMapping("/tableros")
-    @PreAuthorize("hasRole('admin')")
     ResponseEntity<List<TableroDTO>> listarTablerosAdmin(){
         List<TableroDTO> tableros = service.listarDTO();
 
@@ -41,7 +39,6 @@ public class TableroController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('admin')")
     ResponseEntity<TableroDTO> listarTableroPorId(@PathVariable("id") Long id){
         TableroDTO tablero = service.listarDTOPorId(id);
 

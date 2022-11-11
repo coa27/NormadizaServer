@@ -2,7 +2,7 @@ package com.coa.service;
 
 import com.coa.dto.TableroDTO;
 import com.coa.model.Tablero;
-import com.coa.repo.RegistroTableroDTO;
+import com.coa.dto.RegistroTableroDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
