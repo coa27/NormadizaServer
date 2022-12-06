@@ -24,25 +24,11 @@ public class TareaController {
     @Autowired
     private ITareaService service;
 
-    @GetMapping
-    ResponseEntity<List<TareaDTO>> listarTareas(){
-        List<TareaDTO> tareas = service.listarPorDTO();
-
-        return new ResponseEntity<List<TareaDTO>>(tareas, HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}")
-    ResponseEntity<TareaDTO> listarTareaPorId(@PathVariable("id") Long id){
-        TareaDTO tarea = service.listarPorDTOId(id);
-
-        return new ResponseEntity<TareaDTO>(tarea, HttpStatus.OK);
-    }
-
     @GetMapping("/tablero/{id}")
-    ResponseEntity<Page<Tarea>> listarTareaPorTablero(@PathVariable("id") Long id, Pageable pageable){
-        Page<Tarea> tarea = service.listarDTOPorTablero(id, pageable);
+    ResponseEntity<Page<TareaDTO>> listarTareaPorTablero(@PathVariable("id") Long id, Pageable pageable){
+        Page<TareaDTO> tarea = service.listarDTOPorTablero(id, pageable);
 
-        return new ResponseEntity<Page<Tarea>>(tarea, HttpStatus.OK);
+        return new ResponseEntity<Page<TareaDTO>>(tarea, HttpStatus.OK);
     }
 
     @PostMapping
@@ -69,6 +55,22 @@ public class TareaController {
         service.eliminarTarea(tarea.getId());
 
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
+
+    //admin
+
+    @GetMapping
+    ResponseEntity<List<TareaDTO>> listarTareas(){
+        List<TareaDTO> tareas = service.listarPorDTO();
+
+        return new ResponseEntity<List<TareaDTO>>(tareas, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    ResponseEntity<TareaDTO> listarTareaPorId(@PathVariable("id") Long id){
+        TareaDTO tarea = service.listarPorDTOId(id);
+
+        return new ResponseEntity<TareaDTO>(tarea, HttpStatus.OK);
     }
 
 }

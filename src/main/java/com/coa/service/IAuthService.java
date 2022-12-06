@@ -10,4 +10,6 @@ public interface IAuthService {
     LoginResponseDTO acceder(LoginRequestDTO loginRequestDTO);
     Usuario registro(RegistroDTO registroDTO);
 
+    void validacion(String token);
+
 }

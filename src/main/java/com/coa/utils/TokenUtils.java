@@ -58,27 +58,22 @@ public class TokenUtils {
 
         return Jwts.builder()
                 .claim("usuario", userDetails.getUsername())
-                .claim("email", userDetails.getEmail().toString())
                 .setIssuer("cristian_jwt_api")
                 .setExpiration(expiracionFecha)
                 .signWith(key())
                 .compact();
     }
 
-    public UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken(String token){
-        try {
-            Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(TOKEN_SECRET.getBytes())
-                    .build()
-                    .parseClaimsJws(token)
-                    .getBody();
+    public String generarToken(String usuario){
+        int tiempoExpiracion = TOKEN_DURATION * 1000;
+        Date expiracionFecha = new Date(System.currentTimeMillis() + tiempoExpiracion);
 
-            String email = claims.getSubject();
-
-            return new UsernamePasswordAuthenticationToken(email, null, Collections.EMPTY_LIST);
-        }catch (JwtException e){
-            return null;
-        }
+        return Jwts.builder()
+                .claim("usuario", usuario)
+                .setIssuer("cristian_jwt_api")
+                .setExpiration(expiracionFecha)
+                .signWith(key())
+                .compact();
     }
 
     private Key key(){

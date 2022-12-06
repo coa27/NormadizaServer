@@ -3,6 +3,7 @@ package com.coa.repo;
 import com.coa.model.Tablero;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,7 +13,7 @@ import java.util.List;
 
 public interface ITableroRepo extends IGenericRepo<Tablero, Long> {
 
-    List<Tablero> findAllByUsuarioIdUsuario(Long id);
+    List<Tablero> findAllByUsuarioIdUsuario(Long id, Sort sort);
 
     @Query(value = "select id_tablero from tablero where id_usuario = ?", nativeQuery = true)
     List<Long> obtenerIdsTableroPorUsuario(Long usuario);

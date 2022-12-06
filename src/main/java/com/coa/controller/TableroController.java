@@ -24,44 +24,37 @@ public class TableroController {
     @Autowired
     private ITableroService service;
 
-    @GetMapping("/tableros")
-    ResponseEntity<List<TableroDTO>> listarTablerosAdmin(){
-        List<TableroDTO> tableros = service.listarDTO();
-
-        return new ResponseEntity<List<TableroDTO>>(tableros, HttpStatus.OK);
-    }
-
     @GetMapping
-    ResponseEntity<Page<Tablero>> listarTableros(Pageable pageable){
-        Page<Tablero> tableros = service.listarDTOUsuario(pageable);
+    ResponseEntity<Page<TableroDTO>> listarTableros(Pageable pageable){
+        Page<TableroDTO> tableros = service.listarDTOUsuario(pageable);
 
-        return new ResponseEntity<Page<Tablero>>(tableros, HttpStatus.OK);
+        return new ResponseEntity<Page<TableroDTO>>(tableros, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<TableroDTO> listarTableroPorId(@PathVariable("id") Long id){
+    ResponseEntity<TableroDTO> listarTablero(@PathVariable("id") Long id){
         TableroDTO tablero = service.listarDTOPorId(id);
 
         return new ResponseEntity<TableroDTO>(tablero, HttpStatus.OK);
     }
 
     @PostMapping
-    ResponseEntity<Tablero> agregarTablero(@RequestBody @Validated RegistroTableroDTO registroTableroDTO){
-        Tablero u = service.registrarTablero(registroTableroDTO);
+    ResponseEntity<TableroDTO> agregarTablero(@RequestBody @Validated RegistroTableroDTO registroTableroDTO){
+        TableroDTO u = service.registrarTablero(registroTableroDTO);
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(u.getId()).toUri();
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(u.getIdTablero()).toUri();
 
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(u);
     }
 
     @PutMapping
-    ResponseEntity<Tablero> actualizarTablero(@RequestBody TableroDTO tablero){
+    ResponseEntity<TableroDTO> actualizarTablero(@RequestBody TableroDTO tablero){
         //validar si existe
         service.listarPorId(tablero.getIdTablero());
 
-        service.actualizar(tablero);
+        TableroDTO t = service.actualizar(tablero);
 
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(t, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -73,11 +66,25 @@ public class TableroController {
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/usuario/{id}")
-    ResponseEntity<List<TableroDTO>> listarTableroPorIdUsuario(@PathVariable("id") Long id){
+    @GetMapping("/admin/usuario/{id}")
+    ResponseEntity<List<TableroDTO>> listarTableroPorIdUsuarioAdmin(@PathVariable("id") Long id){
         List<TableroDTO> tablero = service.listarDTOPorIdUsuario(id);
 
         return new ResponseEntity<List<TableroDTO>>(tablero, HttpStatus.OK);
+    }
+
+    @GetMapping("/admin/{id}")
+    ResponseEntity<TableroDTO> listarTableroPorIdAdmin(@PathVariable("id") Long id){
+        TableroDTO tablero = service.listarDTOPorId(id);
+
+        return new ResponseEntity<TableroDTO>(tablero, HttpStatus.OK);
+    }
+
+    @GetMapping("/admin/tableros")
+    ResponseEntity<List<TableroDTO>> listarTablerosAdmin(){
+        List<TableroDTO> tableros = service.listarDTO();
+
+        return new ResponseEntity<List<TableroDTO>>(tableros, HttpStatus.OK);
     }
 
 }

@@ -10,17 +10,17 @@ import java.util.List;
 
 public interface ITableroService extends ICRUD<Tablero, Long> {
 
-    Tablero registrarTablero(RegistroTableroDTO tablero);
+    TableroDTO registrarTablero(RegistroTableroDTO tablero);
 
     TableroDTO listarDTOPorId(Long id);
 
     List<TableroDTO> listarDTO();
 
-    Page<Tablero> listarDTOUsuario(Pageable pageable);
+    Page<TableroDTO> listarDTOUsuario(Pageable pageable);
 
     List<TableroDTO> listarDTOPorIdUsuario(Long id);
 
-    void actualizar(TableroDTO tablero);
+    TableroDTO actualizar(TableroDTO tablero);
 
     void eliminarTablero(Long id);
 

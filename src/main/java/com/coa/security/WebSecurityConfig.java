@@ -31,7 +31,7 @@ public class WebSecurityConfig {
                 .exceptionHandling( exceptionhandling -> exceptionhandling.authenticationEntryPoint(jwtAuthEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests(auth -> {
-                    auth.antMatchers(HttpMethod.POST, "/auth/**").permitAll();
+                    auth.antMatchers("/auth/**").permitAll();
                     auth.antMatchers(HttpMethod.GET, "/usuario").hasAuthority("ADMIN");
                     auth.antMatchers(HttpMethod.DELETE, "/usuario/**").hasAuthority("ADMIN");
                     auth.antMatchers(HttpMethod.GET, "/tarea").hasAuthority("ADMIN");

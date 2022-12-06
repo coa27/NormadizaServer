@@ -18,12 +18,34 @@ public class TableroDTO {
 
     private Long idUsuario;
 
-    public TableroDTO(Long idTablero, String nombre, LocalDate createAt, LocalDate updatedAt, Long idUsuario) {
+    private Integer cantidadTotalTareas;
+
+    private Integer cantidadTotalTareasCompletas;
+
+    public TableroDTO(Long idTablero, String nombre, LocalDate createAt, LocalDate updatedAt, Long idUsuario, Integer cantidadTotalTareas, Integer cantidadTotalTareasCompletas) {
         this.idTablero = idTablero;
         this.nombre = nombre;
         this.createAt = createAt;
         this.updatedAt = updatedAt;
         this.idUsuario = idUsuario;
+        this.cantidadTotalTareas = cantidadTotalTareas;
+        this.cantidadTotalTareasCompletas = cantidadTotalTareasCompletas;
+    }
+
+    public Integer getCantidadTotalTareas() {
+        return cantidadTotalTareas;
+    }
+
+    public void setCantidadTotalTareas(Integer cantidadTotalTareas) {
+        this.cantidadTotalTareas = cantidadTotalTareas;
+    }
+
+    public Integer getCantidadTotalTareasCompletas() {
+        return cantidadTotalTareasCompletas;
+    }
+
+    public void setCantidadTotalTareasCompletas(Integer cantidadTotalTareasCompletas) {
+        this.cantidadTotalTareasCompletas = cantidadTotalTareasCompletas;
     }
 
     public String getNombre() {

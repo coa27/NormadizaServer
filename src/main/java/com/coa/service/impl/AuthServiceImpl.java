@@ -10,7 +10,6 @@ import com.coa.repo.IRolRepo;
 import com.coa.repo.IUsuarioRepo;
 import com.coa.security.UserDetailsImpl;
 import com.coa.service.IAuthService;
-import com.coa.service.IUsuarioService;
 import com.coa.utils.TokenUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +79,11 @@ public class AuthServiceImpl implements IAuthService {
         usuario.setContrasenia(passwordEncoder.encode(registroDTO.getContrasenia()));
         rolUsuario(usuario);
         return usuarioRepo.save(usuario);
+    }
+
+    @Override
+    public void validacion(String token) {
+        tokenUtils.validarToken(token);
     }
 
     public AuthServiceImpl(AuthenticationManager authenticationManager, TokenUtils tokenUtils) {

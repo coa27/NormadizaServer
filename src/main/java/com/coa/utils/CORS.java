@@ -27,7 +27,7 @@ public class CORS implements Filter {
         response.setHeader("Access-Control-Allow-Headers", "*");
         response.setHeader("Access-Control-Allow-Methods", "DELETE, GET, OPTIONS, PATCH, POST, PUT");
         response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN, Access-Control-Request-Headers");
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN, Access-Control-Request-Headers, x-token");
 //        response.setHeader("Access-Control-Allow-Headers", "Access-Control-Request-Headers");
 
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {

@@ -1,9 +1,13 @@
 package com.coa.dto;
 
+import com.coa.utils.FechaDeserializer;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 public class TareaDTO {
@@ -19,8 +23,10 @@ public class TareaDTO {
     @NotNull
     private Boolean finalizado;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate fechaInicio;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate fechaFin;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
@@ -74,6 +80,7 @@ public class TareaDTO {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
 
     public LocalDate getFechaInicio() {
         return fechaInicio;

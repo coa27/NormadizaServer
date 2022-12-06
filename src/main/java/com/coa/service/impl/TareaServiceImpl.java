@@ -57,13 +57,12 @@ public class TareaServiceImpl extends CRUDImpl<Tarea, Long> implements ITareaSer
     }
 
     @Override
-    public Page<Tarea> listarDTOPorTablero(Long id, Pageable pageable) {
+    public Page<TareaDTO> listarDTOPorTablero(Long id, Pageable pageable) {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         //valido si se esta accediendo a su tablero
         esSuTablero(userDetails.getIdUsuario(), id);
 
-        Page<Tarea> page = repo.paginacion(id, pageable);
+        Page<TareaDTO> page = repo.paginacionTareaDTO(id, pageable);
 
         return page;
     }

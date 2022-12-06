@@ -13,7 +13,7 @@ public interface ITareaService extends ICRUD<Tarea, Long> {
 
     TareaDTO listarPorDTOId(Long id);
 
-    Page<Tarea> listarDTOPorTablero(Long id, Pageable pageable);
+    Page<TareaDTO> listarDTOPorTablero(Long id, Pageable pageable);
 
     void actualizar(TareaDTO tareaDTO);
 
